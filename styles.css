@@ -1,0 +1,391 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+    --brand-color: #B8860B;
+    --brand-color-light: #d4a82c;
+    --brand-color-lighter: #fdf6e6;
+    --text-color: #333;
+    --text-light: #666;
+    --background-light: #f5f5f5;
+    --border-color: #e0e0e0;
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --error-color: #ff4444;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+/* Notification Styles */
+.notification-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none;
+}
+
+.notification-wrapper.show {
+    display: block;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.notification-wrapper.hide {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.notification {
+    background-color: rgba(51, 51, 51, 0.9);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    min-width: 200px;
+    max-width: 300px;
+    line-height: 1.4;
+    backdrop-filter: blur(4px);
+}
+
+/* Calendar Styles */
+.calendar-wrapper {
+    background: white;
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: transform 0.2s ease;
+}
+
+.nav-btn:hover {
+    transform: scale(1.1);
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--spacing-xs);
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    position: relative;
+    background-color: white;
+}
+
+.calendar-day:hover {
+    color: var(--text-color);
+    transform: scale(1.05);
+    background-color: var(--brand-color-lighter);
+    border-color: var(--brand-color-light);
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.15);
+}
+
+.calendar-day.selected {
+    background-color: var(--brand-color);
+    color: white;
+    font-weight: 500;
+    transform: scale(1.05);
+    border-color: var(--brand-color);
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.25);
+}
+
+.calendar-day.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.calendar-day.has-slots {
+    background-color: var(--brand-color-lighter);
+    border-color: var(--brand-color-light);
+    color: var(--text-color);
+}
+
+.calendar-day.has-slots.selected {
+    background-color: var(--brand-color);
+    color: white;
+}
+
+.calendar-day.has-slots::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--brand-color);
+}
+
+/* Selected Slots Styles */
+.selected-slot-item {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    position: relative;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.3s ease;
+}
+
+.selected-slot-item:hover {
+    border-color: var(--brand-color-light);
+    transform: translateX(4px);
+}
+
+.selected-slot-item .date {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.selected-slot-item .time {
+    color: var(--text-light);
+}
+
+.selected-slot-item .remove-button {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected-slot-item .remove-button:hover {
+    color: var(--error-color);
+    transform: scale(1.1);
+    background-color: rgba(255, 68, 68, 0.1);
+}
+
+/* Timeslot Styles */
+.timeslots-wrapper {
+    margin-top: var(--spacing-lg);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.timeslots-wrapper.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeslot-header {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-color);
+    font-size: 18px;
+    transition: opacity 0.3s ease;
+}
+
+.timeslot-header.disabled {
+    opacity: 0.5;
+}
+
+.timeslot-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.timeslot-option {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.timeslot-option label {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--background-light);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.timeslot-option:not(.disabled):hover label {
+    transform: translateX(4px);
+}
+
+.timeslot-option.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.timeslot-option.disabled label {
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+}
+
+.timeslot-option input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-custom {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--text-light);
+    border-radius: 6px;
+    margin-right: var(--spacing-md);
+    position: relative;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.checkbox-custom::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 7px;
+    width: 6px;
+    height: 11px;
+    border: solid var(--brand-color);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.2s ease;
+}
+
+.timeslot-option input[type="checkbox"]:checked + label .checkbox-custom {
+    border-color: var(--brand-color);
+    background-color: white;
+}
+
+.timeslot-option input[type="checkbox"]:checked + label .checkbox-custom::after {
+    transform: rotate(45deg) scale(1);
+}
+
+.timeslot-option:not(.disabled):hover .checkbox-custom {
+    border-color: var(--brand-color);
+}
+
+.timeslot-label {
+    font-weight: 600;
+    margin-right: var(--spacing-sm);
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.timeslot-time {
+    color: var(--text-light);
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.timeslot-option input[type="checkbox"]:checked + label .timeslot-label,
+.timeslot-option input[type="checkbox"]:checked + label .timeslot-time {
+    color: var(--brand-color);
+}
+
+/* Selected Slots */
+.selected-slots {
+    margin-top: var(--spacing-lg);
+    animation: fadeIn 0.3s ease;
+}
+
+.selected-slots h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-color);
+    font-size: 18px;
+}
+
+.selection-count {
+    color: var(--text-light);
+    font-size: 14px;
+    margin-top: var(--spacing-sm);
+} 
