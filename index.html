@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datum en Tijdslot Kiezer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calendar-wrapper">
+            <div class="calendar-header">
+                <button class="nav-btn" id="prevMonth">&lt;</button>
+                <h2 id="currentMonth">maart 2025</h2>
+                <button class="nav-btn" id="nextMonth">&gt;</button>
+            </div>
+            <div class="weekdays">
+                <div>ma</div>
+                <div>di</div>
+                <div>wo</div>
+                <div>do</div>
+                <div>vr</div>
+                <div>za</div>
+                <div>zo</div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Dagen worden hier dynamisch ingevoegd -->
+            </div>
+        </div>
+
+        <div class="notification-wrapper" id="notification">
+            <div class="notification">
+                <span id="notificationText"></span>
+            </div>
+        </div>
+
+        <div class="timeslots-wrapper">
+            <div class="timeslot-options" id="timeslotOptions">
+                <h3 class="timeslot-header">Selecteer eerst een datum om tijden te kiezen</h3>
+                <div class="timeslot-option disabled" data-time="ochtend">
+                    <input type="checkbox" id="ochtend" disabled>
+                    <label for="ochtend">
+                        <span class="checkbox-custom"></span>
+                        <span class="timeslot-label">Ochtend</span>
+                        <span class="timeslot-time">08:00 - 12:00</span>
+                    </label>
+                </div>
+                <div class="timeslot-option disabled" data-time="middag">
+                    <input type="checkbox" id="middag" disabled>
+                    <label for="middag">
+                        <span class="checkbox-custom"></span>
+                        <span class="timeslot-label">Middag</span>
+                        <span class="timeslot-time">12:00 - 18:00</span>
+                    </label>
+                </div>
+                <div class="timeslot-option disabled" data-time="avond">
+                    <input type="checkbox" id="avond" disabled>
+                    <label for="avond">
+                        <span class="checkbox-custom"></span>
+                        <span class="timeslot-label">Avond</span>
+                        <span class="timeslot-time">18:00 - 21:00</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="selected-slots">
+                <h3>Je gekozen dagen en dagdelen</h3>
+                <div id="selectedSlotsList"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
